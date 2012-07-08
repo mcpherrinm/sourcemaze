@@ -1,12 +1,9 @@
  <!doctype html><title>Welcome to the maze. Arrow keys move.</title>
  <style>      
   body, html {overflow: hidden}
-  span#win {
-    background-color: red;
-  }
-  span#active {
-    background-color: blue;
-  }
+  span {background-color: #eee; }
+  span#win { background-color: red; }
+  span#active { background-color: blue; }
 </style>
 
 <pre id=maze></pre>
@@ -14,8 +11,8 @@
 var cursorcol = 0;
 var cursorrow = 0;
 
-var getcur = function(col, row) {
-  return document.querySelector('span.col' + col + '.row' + row);
+function getcur(c, r) {
+  return document.querySelector('span.col' + c + '.row' + r);
 }
 
 var move = function(dcol, drow) {
@@ -23,8 +20,7 @@ var move = function(dcol, drow) {
   var destrow = cursorrow + drow;
 
   var dest = getcur(destcol, destrow);
-  if(!dest || dest.textContent != 0) {
-    console.log("nope");
+  if(!dest || dest.textContent != ' ') {
     return;
   }
   if(dest.id == "win") alert("cool");
@@ -33,36 +29,13 @@ var move = function(dcol, drow) {
   document.getElementById('active').id="";
   getcur(cursorcol, cursorrow).id='active';
 };
-var down = function() {
-  console.log('down');
-  move(0, 1);
-  return false;
-};
-
-var up = function() {
-  console.log('up');
-  move(0, -1);
-  return false;
-};
-var right = function() {
-  console.log('right');
-  move(1, 0);
-};
-var left = function() {
-  console.log('left');
-  move(-1, 0);
-};
 
 document.body.onkeypress = function(event) {
   switch(event.keyCode) {
-  case 37: //left
-    left(); return false;
-  case 38: //up
-    up(); return false;
-  case 39: //right
-    right(); return false;
-  case 40: //down
-    down(); return false;
+  case 37: move(-1, 0); return false;
+  case 38: move(0, -1); return false;
+  case 39: move(1, 0); return false;
+  case 40: move(0, 1); return false;
   }
 }
 
