@@ -1,0 +1,57 @@
+ <!doctype html><title>Welcome to the maze. Arrow keys move.</title>
+ <style>      
+  body, html {overflow: hidden}
+  span {background-color: #eee; }
+  span#win { background-color: red; }
+  span#active { background-color: blue; }
+</style>
+
+<pre id=maze></pre>
+<script>
+var cursorcol = 2;
+var cursorrow = 0;
+
+function getcur(c, r) {
+  return document.querySelector('span.col' + c + '.row' + r);
+}
+
+var move = function(dcol, drow) {
+  var destcol = cursorcol + dcol;
+  var destrow = cursorrow + drow;
+
+  var dest = getcur(destcol, destrow);
+  if(!dest || dest.textContent != ' ') {
+    return;
+  }
+  if(dest.id == "win") alert("win");
+  cursorcol = destcol;
+  cursorrow = destrow;
+  document.getElementById('active').id="";
+  getcur(cursorcol, cursorrow).id='active';
+};
+
+document.body.onkeydown = function(event) {
+  switch(event.keyCode) {
+  case 37: move(-1, 0); return false;
+  case 38: move(0, -1); return false;
+  case 39: move(1, 0); return false;
+  case 40: move(0, 1); return false;
+  }
+}
+
+var req = new XMLHttpRequest();
+req.open('GET', 'mazes/small.txt', false);
+req.send();
+if(req.status != 200) { alert('sad'); }
+var maze = document.getElementById('maze');
+
+var col = 0; var row = 0;
+var thisdiv = document.createElement('div');
+for(var i = 0; i < req.responseText.length; i++) { var c = req.responseText[i];
+if(c == '\n') { col = 0; row++; maze.appendChild(thisdiv); thisdiv =
+document.createElement('div'); } else { var it = document.createElement('span')
+it.textContent = c; it.className="col" + col + " row" + row;
+thisdiv.appendChild(it); col++; } }
+document.querySelector('span.col2.row0').id="active"; console.log(row+","+col)
+document.querySelector('span.col54.row'+(row-1)).id="win";
+</script>
