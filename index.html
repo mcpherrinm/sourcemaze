@@ -1,57 +1,22 @@
- <!doctype html><title>Welcome to the maze. Arrow keys move.</title>
- <style>      
-  body, html {overflow: hidden}
-  span {background-color: #eee; }
-  span#win { background-color: red; }
-  span#active { background-color: blue; }
-</style>
-
-<pre id=maze></pre>
-<script>
-var cursorcol = 0;
-var cursorrow = 0;
-
-function getcur(c, r) {
-  return document.querySelector('span.col' + c + '.row' + r);
-}
-
-var move = function(dcol, drow) {
-  var destcol = cursorcol + dcol;
-  var destrow = cursorrow + drow;
-
-  var dest = getcur(destcol, destrow);
-  if(!dest || dest.textContent != ' ') {
-    return;
-  }
-  if(dest.id == "win") alert("cool");
-  cursorcol = destcol;
-  cursorrow = destrow;
-  document.getElementById('active').id="";
-  getcur(cursorcol, cursorrow).id='active';
-};
-
-document.body.onkeypress = function(event) {
-  switch(event.keyCode) {
-  case 37: move(-1, 0); return false;
-  case 38: move(0, -1); return false;
-  case 39: move(1, 0); return false;
-  case 40: move(0, 1); return false;
-  }
-}
-
-var req = new XMLHttpRequest();
-req.open('GET', '#', false);
-req.send();
-if(req.status != 200) { alert('sad'); }
-var maze = document.getElementById('maze');
-
-var col = 0; var row = 0;
-var thisdiv = document.createElement('div');
-for(var i = 0; i < req.responseText.length; i++) { var c = req.responseText[i];
-if(c == '\n') { col = 0; row++; maze.appendChild(thisdiv); thisdiv =
-document.createElement('div'); } else { var it = document.createElement('span')
-it.textContent = c; it.className="col" + col + " row" + row;
-thisdiv.appendChild(it); col++; } }
-document.querySelector('span.col0.row0').id="active"; console.log(row+","+col)
-document.querySelector('span.col0.row'+row-2).id="win";
-</script>
+<!doctype html><title>Welcome to the maze. Arrow keys move.  </title>   <style >
+body                    ,html        {                       overflow : hidden }
+span {background-color: #eee; } #win { background-color:red; }pre div > span#a {
+      background-color        : blue   ;                   }          ; </style>
+ <pre id=m></pre><script>ccol = 9    ; var crw=0; function gp (c,row) { var qs =
+                 '.c'+        c + '.r'       +        row  ;    var t = document
+.querySelector ( qs);  return t ; };function move (dcol,   drw) {dcol =    ccol+
+dcol           ; drw  =       crw +          drow;    var     d = gp  ( dcol,drw
+); if(!d || d.textContent != ' ') { return d; } if(d.id == "win") alert("win");
+ccol = dcol; crw = drow; document.getElementById('a').id=""; gp(ccol,
+crw).id='a'; }; document.body.onkeydown = function(event) {
+switch(event.keyCode) { case 37: move(-1, 0); return false; case 38: move(0,
+-1); return false; case 39: move(1, 0); return false; case 40: move(0, 1);
+return false; } }; var maze = document.getElementById('m'); var r = new
+XMLHttpRequest(); r.open('GET', '#', false); r.send(); var col = 0; var row =
+0; var thisdiv = document.createElement('div'); for(var i = 0; i <
+r.responseText.length; i++) { var c = r.responseText[i]; if(c == '\n') { col =
+0; row++; maze.appendChild(thisdiv); thisdiv = document.createElement('div'); }
+else { var it = document.createElement('span'); it.textContent = c;
+it.className="c" + col + " r" + row; thisdiv.appendChild(it); col++; } };
+document.querySelector('.c9.r0').id="a";
+document.querySelector('.c0.r19').id="win"; </script>
